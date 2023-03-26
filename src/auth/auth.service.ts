@@ -6,17 +6,17 @@ import { Prisma, PrismaClient } from '@prisma/client';
 
 @Injectable({})
 export class AuthService {
-  constructor(private dbService: DbService) {}
+  constructor(private dbService: DbService) { }
 
   async signup(request: SignUpDTO) {
     // Hash user password
-    const prisma = new PrismaClient();
+    const hash = await argon.hash(request.password);
 
     // Create the user
-    const user = await prisma.user.create({
+    const user = await this.dbService.user.create({
       data: {
         username: request.username,
-        hash: request.password,
+        hash,
         firstName: request.firstName,
         lastName: request.lastName,
         email: request.email,
@@ -24,6 +24,7 @@ export class AuthService {
     });
     // Save User in the database
 
+    delete user.hash;
     console.log(user);
     return { user };
   }
