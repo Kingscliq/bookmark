@@ -10,4 +10,4 @@ import { DbService } from './db/db.service';
   controllers: [AppController, AuthController],
   providers: [AppService, AuthService, DbService],
 })
-export class AppModule { }
+export class AppModule {}
