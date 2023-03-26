@@ -38,7 +38,8 @@ model Bookmark{
  description String?
  link String
 
+ @@map("bookmarks")
  userId Int
  user User @relation(fields: [userId], references: [id])
-@@map("bookmarks")
+
 }
