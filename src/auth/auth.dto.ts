@@ -16,9 +16,12 @@ export class SignUpDTO {
   lastName?: string;
 }
 
-export interface SignInDTO {
-  name: string;
+export class SignInDTO {
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
   password: string;
-  firstname: string;
-  lastname: string;
 }

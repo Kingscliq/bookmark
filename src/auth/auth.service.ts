@@ -1,12 +1,12 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { DbService } from 'src/db/db.service';
-import { SignUpDTO } from './auth.dto';
+import { SignInDTO, SignUpDTO } from './auth.dto';
 import * as argon from 'argon2';
 import { Prisma } from '@prisma/client';
 
 @Injectable({})
 export class AuthService {
-  constructor(private dbService: DbService) {}
+  constructor(private dbService: DbService) { }
 
   async signup(request: SignUpDTO) {
     // Hash user password
@@ -28,7 +28,6 @@ export class AuthService {
 
       return user;
     } catch (error) {
-      console.log(error);
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
           throw new ForbiddenException('Email or Username Already Exists');
@@ -39,7 +38,27 @@ export class AuthService {
     }
   }
 
-  signin() {
+  async signin(req: SignInDTO) {
+    try {
+      // Check for user on the db
+      const user = await this.dbService.user.findUnique({
+        where: {
+          email: req.email,
+        },
+      });
+
+      // throw exception if user not foun
+
+      const password = await argon.verify(req.password, user.hash);
+      if (!password || !user) {
+        throw new ForbiddenException('Invalid Credentials');
+      }
+      delete user.hash;
+
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
     return { msg: 'Hello signup' };
   }
 }
