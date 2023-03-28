@@ -6,7 +6,7 @@ import { Prisma } from '@prisma/client';
 
 @Injectable({})
 export class AuthService {
-  constructor(private dbService: DbService) { }
+  constructor(private dbService: DbService) {}
 
   async signup(request: SignUpDTO) {
     // Hash user password
@@ -39,26 +39,25 @@ export class AuthService {
   }
 
   async signin(req: SignInDTO) {
-    try {
-      // Check for user on the db
-      const user = await this.dbService.user.findUnique({
-        where: {
-          email: req.email,
-        },
-      });
-
-      // throw exception if user not foun
-
-      const password = await argon.verify(req.password, user.hash);
-      if (!password || !user) {
-        throw new ForbiddenException('Invalid Credentials');
-      }
-      delete user.hash;
-
-      return user;
-    } catch (error) {
-      console.log(error);
+    // Check for user on the db
+    const user = await this.dbService.user.findUnique({
+      where: {
+        email: req.email,
+      },
+    });
+    console.log(user);
+    if (!user) {
+      throw new ForbiddenException('Invalid Credentials');
     }
-    return { msg: 'Hello signup' };
+    // throw exception if user not foun
+
+    const passwordMatch = await argon.verify(user.hash, req.password);
+    if (!passwordMatch) {
+      throw new ForbiddenException('Invalid Credentials');
+    }
+
+    delete user.hash;
+
+    return user;
   }
 }
