@@ -3,10 +3,11 @@ import { DbService } from 'src/db/db.service';
 import { SignInDTO, SignUpDTO } from './auth.dto';
 import * as argon from 'argon2';
 import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
 
 @Injectable({})
 export class AuthService {
-  constructor(private dbService: DbService) {}
+  constructor(private dbService: DbService) { }
 
   async signup(request: SignUpDTO) {
     // Hash user password
@@ -29,10 +30,12 @@ export class AuthService {
       delete user.hash;
       return { user };
     } catch (error) {
-      if (error.code === 'p2002') {
-        throw new ForbiddenException('Email or Username Already Exists');
-      } else {
-        throw error;
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2002') {
+          throw new ForbiddenException('Email or Username Already Exists');
+        } else {
+          throw error;
+        }
       }
     }
   }
@@ -40,8 +43,4 @@ export class AuthService {
   signin() {
     return { msg: 'Hello signup' };
   }
-
-  //   signup(data: SignUpDTO) {
-  //     return { data };
-  //   }
 }
