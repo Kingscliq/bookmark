@@ -45,7 +45,6 @@ export class AuthService {
         email: req.email,
       },
     });
-    console.log(user);
     if (!user) {
       throw new ForbiddenException('Invalid Credentials');
     }
@@ -56,8 +55,10 @@ export class AuthService {
       throw new ForbiddenException('Invalid Credentials');
     }
 
-    delete user.hash;
+    const { hash, ...result } = user;
 
-    return user;
+    const token = await this.jwtService.signAsync(user);
+
+    return { ...result, authToken: token };
   }
 }
