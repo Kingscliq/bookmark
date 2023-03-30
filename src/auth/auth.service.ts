@@ -3,30 +3,30 @@ import { DbService } from 'src/db/db.service';
 import { SignInDTO, SignUpDTO } from './auth.dto';
 import * as argon from 'argon2';
 import { Prisma } from '@prisma/client';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable({})
 export class AuthService {
-  constructor(private dbService: DbService) {}
+  constructor(private dbService: DbService, private jwtService: JwtService) { }
 
   async signup(request: SignUpDTO) {
     // Hash user password
     try {
-      const hash = await argon.hash(request.password);
+      const password = await argon.hash(request.password);
 
       // Create the user
       const user = await this.dbService.user.create({
         data: {
           username: request.username,
-          hash,
+          hash: password,
           firstName: request.firstName,
           lastName: request.lastName,
           email: request.email,
         },
       });
       // Save User in the database
-      delete user.hash;
-
-      return user;
+      const { hash, ...result } = user;
+      return result;
     } catch (error) {
       if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code === 'P2002') {
