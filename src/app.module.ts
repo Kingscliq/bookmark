@@ -6,9 +6,10 @@ import { AuthController } from './auth/auth.controller';
 import { DbService } from './db/db.service';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants/jwtConstants';
-
+import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     JwtModule.register({
       global: true,
       // FIXME : Add Secret from env.
