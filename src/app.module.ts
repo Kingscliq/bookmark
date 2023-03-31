@@ -9,7 +9,7 @@ import { jwtConstants } from './constants/jwtConstants';
 import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({}),
     JwtModule.register({
       global: true,
       // FIXME : Add Secret from env.
