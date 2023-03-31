@@ -12,7 +12,6 @@ import { ConfigModule } from '@nestjs/config';
     ConfigModule.forRoot({}),
     JwtModule.register({
       global: true,
-      // FIXME : Add Secret from env.
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '2 days' },
     }),
