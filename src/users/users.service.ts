@@ -5,8 +5,8 @@ import { JwtService } from '@nestjs/jwt';
 @Injectable({})
 export class UserService {
   constructor(private dbService: DbService, private jwtService: JwtService) {}
-  fetchUser() {
-    return 'hello User';
+  fetchUsers() {
+    return 'hello Users';
   }
 
   fetchSingleUser() {

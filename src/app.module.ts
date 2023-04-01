@@ -9,9 +9,12 @@ import { jwtConstants } from './constants/jwtConstants';
 import { ConfigModule } from '@nestjs/config';
 import { UserService } from './users/users.service';
 import { UserController } from './users/users.controller';
+import { PassportModule } from '@nestjs/passport';
+import { JwtStrategy } from './strategy/jwt.strategy';
 @Module({
   imports: [
     ConfigModule.forRoot({}),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
@@ -19,6 +22,6 @@ import { UserController } from './users/users.controller';
     }),
   ],
   controllers: [AppController, AuthController, UserController],
-  providers: [AppService, AuthService, DbService, UserService],
+  providers: [AppService, AuthService, DbService, UserService, JwtStrategy],
 })
 export class AppModule {}

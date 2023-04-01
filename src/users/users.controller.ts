@@ -1,16 +1,22 @@
 import { UserService } from './users.service';
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { Request } from 'express';
 
 @Controller('api/v1')
 export class UserController {
   constructor(private userService: UserService) {}
 
+  @UseGuards(AuthGuard('jwt'))
   @Get('users')
   fetchAllUsers() {
-    return this.userService.fetchUser();
+    return this.userService.fetchUsers();
   }
-  @Get('users')
-  fetchSingleUsers() {
-    return this.userService.fetchUser();
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('user')
+  fetchSingleUsers(@Req() req: Request) {
+    console.log({ user: req.user });
+    return this.userService.fetchSingleUser();
   }
 }
