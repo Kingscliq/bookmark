@@ -8,4 +8,8 @@ export class UserService {
   fetchUser() {
     return 'hello User';
   }
+
+  fetchSingleUser() {
+    return 'hello Single User';
+  }
 }

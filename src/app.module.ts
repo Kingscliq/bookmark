@@ -7,6 +7,8 @@ import { DbService } from './db/db.service';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './constants/jwtConstants';
 import { ConfigModule } from '@nestjs/config';
+import { UserService } from './users/users.service';
+import { UserController } from './users/users.controller';
 @Module({
   imports: [
     ConfigModule.forRoot({}),
@@ -16,7 +18,7 @@ import { ConfigModule } from '@nestjs/config';
       signOptions: { expiresIn: '2 days' },
     }),
   ],
-  controllers: [AppController, AuthController],
-  providers: [AppService, AuthService, DbService],
+  controllers: [AppController, AuthController, UserController],
+  providers: [AppService, AuthService, DbService, UserService],
 })
 export class AppModule {}
