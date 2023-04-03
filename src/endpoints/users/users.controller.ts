@@ -9,13 +9,12 @@ export class UserController {
   constructor(private userService: UserService) {}
   @Get('users')
   fetchAllUsers(@Req() req: Request) {
-    console.log({ user: req.user });
-    return this.userService.fetchUsers();
+    return this.userService.fetchUsers(req.user);
   }
 
   @Get('user')
   fetchSingleUsers(@Req() req: Request) {
     console.log({ user: req.user });
-    return this.userService.fetchSingleUser();
+    return this.userService.fetchSingleUser(req.user);
   }
 }

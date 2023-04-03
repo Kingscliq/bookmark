@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { DbService } from 'src/db/db.service';
-import { JwtService } from '@nestjs/jwt';
+import { User } from '@prisma/client';
 
 @Injectable({})
 export class UserService {
-  constructor(private dbService: DbService, private jwtService: JwtService) {}
-  fetchUsers() {
-    return 'hello Users';
+  constructor(private dbService: DbService) {}
+  fetchUsers(data: Partial<User>) {
+    return data;
   }
 
-  fetchSingleUser() {
-    return 'hello Single User';
+  fetchSingleUser(data: Partial<User>) {
+    return data;
   }
 }
