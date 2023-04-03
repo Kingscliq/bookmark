@@ -4,18 +4,27 @@ import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { jwtConstants } from 'src/constants/jwtConstants';
 import { User } from '@prisma/client';
+import { DbService } from 'src/db/db.service';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy, 'jwt') {
-  constructor(private jwtService: JwtService) {
+  constructor(private jwtService: JwtService, private dbService: DbService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: jwtConstants.secret,
     });
   }
 
-  validate(payload: User) {
-    console.log(payload);
-    return 'Hello';
+  async validate(
+    payload: User,
+  ): Promise<Partial<User> | Observable<Partial<User>>> {
+    const user = await this.dbService.user.findUnique({
+      where: {
+        id: payload.id,
+      },
+    });
+    const { hash, ...rest } = user;
+    return rest;
   }
 }
