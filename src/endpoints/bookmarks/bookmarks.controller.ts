@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Get, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
 import { JwtGuard } from './../../guards/jwt.guard';
 import { GetUser } from './../../decorators';
@@ -25,12 +25,12 @@ export class BookMarksController {
     return this.bookMarkServce.getBookmarkById();
   }
 
-  @Get('bookmarks')
+  @Patch('bookmarks')
   EditBookMarkById() {
     return this.bookMarkServce.editBookMarkById();
   }
 
-  @Get('bookmarks')
+  @Delete('bookmarks')
   DeleteBookMarkById() {
     return this.bookMarkServce.deleteBookmarkById();
   }
