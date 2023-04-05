@@ -1,4 +1,4 @@
-import { Controller, Get, Req, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { Request } from 'express';
 import { JwtGuard } from './../../guards/jwt.guard';
 import { GetUser } from './../../decorators';
@@ -9,15 +9,29 @@ import { BookMarkService } from './bookmarks.service';
 @Controller('api/v1')
 export class BookMarksController {
   constructor(private bookMarkServce: BookMarkService) {}
-  
-  @Get('bookmarks')
-  GetAllBooMarks() {
-    return this.bookMarkServce.getAllBookMarks(user);
+
+  @Post('bookmarks')
+  CreateBookMark() {
+    return this.bookMarkServce.createBookMark();
   }
 
   @Get('bookmarks')
-  GetBookMarkById(@Req() req: Request) {
-    console.log({ user: req.user });
-    return this.bookMarkServce.fetchSingleUser(req.user);
+  GetAllBookMarks() {
+    return this.bookMarkServce.getAllBookmarks();
+  }
+
+  @Get('bookmarks')
+  GetBookMarkById() {
+    return this.bookMarkServce.getBookmarkById();
+  }
+
+  @Get('bookmarks')
+  EditBookMarkById() {
+    return this.bookMarkServce.editBookMarkById();
+  }
+
+  @Get('bookmarks')
+  DeleteBookMarkById() {
+    return this.bookMarkServce.deleteBookmarkById();
   }
 }

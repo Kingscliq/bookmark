@@ -1,15 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { DbService } from './../../db/db.service';
-import { User } from '@prisma/client';
 
 @Injectable({})
 export class BookMarkService {
   constructor(private dbService: DbService) {}
-  fetchUsers(data: Partial<User>) {
-    return data;
+
+  getAllBookmarks() {
+    return 'All BookMarks';
   }
 
-  fetchSingleUser(data: Partial<User>) {
-    return data;
+  getBookmarkById() {
+    return 'get Bookmark By Id';
+  }
+
+  createBookMark() {
+    return 'Bookmark Created';
+  }
+
+  editBookMarkById() {
+    return 'Edited BookMark';
+  }
+
+  deleteBookmarkById() {
+    return 'Deleted BookMark';
   }
 }
