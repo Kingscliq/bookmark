@@ -3,7 +3,7 @@ import { DbService } from './../../db/db.service';
 import { User } from '@prisma/client';
 
 @Injectable({})
-export class UserService {
+export class BookMarkService {
   constructor(private dbService: DbService) {}
   fetchUsers(data: Partial<User>) {
     return data;
