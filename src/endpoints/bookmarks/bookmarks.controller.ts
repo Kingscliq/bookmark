@@ -35,7 +35,10 @@ export class BookMarksController {
   }
 
   @Patch('bookmarks')
-  EditBookMarkById() {
+  EditBookMarkById(
+    @GetUser('id') user: Partial<User>,
+    @Param('id') id: number,
+  ) {
     return this.bookMarkServce.editBookMarkById();
   }
 
