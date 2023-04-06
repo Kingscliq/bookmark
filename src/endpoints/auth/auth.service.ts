@@ -1,5 +1,5 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
-import { DbService } from 'src/db/db.service';
+import { DbService } from './../../db/db.service';
 import { SignInDTO, SignUpDTO } from './auth.dto';
 import * as argon from 'argon2';
 import { Prisma } from '@prisma/client';
