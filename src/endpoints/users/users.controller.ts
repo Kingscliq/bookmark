@@ -16,7 +16,6 @@ export class UserController {
 
   @Get('user')
   fetchSingleUsers(@Req() req: Request) {
-    console.log({ user: req.user });
     return this.userService.fetchSingleUser(req.user);
   }
 }
