@@ -6,14 +6,18 @@ import { DbService } from './../../db/db.service';
 export class BookMarkService {
   constructor(private dbService: DbService) {}
 
-  createBookMark(userId: number, payload: CreateBookMarkDto) {
-    console.log(userId, payload);
+  async createBookMark(userId: number, payload: CreateBookMarkDto) {
     return 'Bookmark Created';
   }
 
-  getAllBookmarks(userId: number) {
-    console.log(userId);
-    return 'All BookMarks';
+  async getAllBookmarks(userId: number) {
+    const bookmarks = await this.dbService.bookmark.findMany({
+      where: {
+        userId,
+      },
+    });
+
+    return bookmarks;
   }
 
   getBookmarkById(userId: number, bookmarkId: number) {
