@@ -1,8 +1,12 @@
-import { Controller, Delete, Get, Patch, Post, Req, UseGuards } from '@nestjs/common';
-import { Request } from 'express';
+import {
+  Controller,
+  Delete,
+  Get,
+  Patch,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import { JwtGuard } from './../../guards/jwt.guard';
-import { GetUser } from './../../decorators';
-import { User } from '@prisma/client';
 import { BookMarkService } from './bookmarks.service';
 
 @UseGuards(JwtGuard)
