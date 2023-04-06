@@ -4,6 +4,7 @@ import {
   Delete,
   Get,
   Param,
+  ParseIntPipe,
   Patch,
   Post,
   UseGuards,
@@ -11,39 +12,46 @@ import {
 import { User } from '@prisma/client';
 import { GetUser } from 'src/decorators';
 import { JwtGuard } from './../../guards/jwt.guard';
-import { CreateBookMarkDto } from './bookmark.dto';
+import { CreateBookMarkDto, EditBookMarkDto } from './bookmark.dto';
 import { BookMarkService } from './bookmarks.service';
 
 @UseGuards(JwtGuard)
-@Controller('api/v1')
+@Controller('api/v1/bookmarks')
 export class BookMarksController {
   constructor(private bookMarkServce: BookMarkService) {}
 
-  @Post('bookmarks')
+  @Post()
   CreateBookMark(@Body() payload: CreateBookMarkDto) {
     return this.bookMarkServce.createBookMark(payload);
   }
 
-  @Get('bookmarks')
-  GetAllBookMarks(@GetUser('id') user: Partial<User>) {
+  @Get()
+  GetAllBookMarks(@GetUser('id') userId: number) {
     return this.bookMarkServce.getAllBookmarks();
   }
 
-  @Get('bookmarks')
-  GetBookMarkById(@GetUser('id') user: Partial<User>, @Param('id') id: number) {
+  @Get(':id')
+  GetBookMarkById(
+    @GetUser('id') userId: number,
+    @Param('id', ParseIntPipe) bookmarkId: number,
+  ) {
     return this.bookMarkServce.getBookmarkById();
   }
 
-  @Patch('bookmarks')
+  @Patch(':id')
   EditBookMarkById(
-    @GetUser('id') user: Partial<User>,
-    @Param('id') id: number,
+    @GetUser('id') userId: number,
+    @Param('id', ParseIntPipe) bookmarkId: number,
+    @Body('id') req: EditBookMarkDto,
   ) {
     return this.bookMarkServce.editBookMarkById();
   }
 
-  @Delete('bookmarks')
-  DeleteBookMarkById() {
+  @Delete(':id')
+  DeleteBookMarkById(
+    @GetUser('id') userId: number,
+    @Param('id', ParseIntPipe) bookmarkId: number,
+  ) {
     return this.bookMarkServce.deleteBookmarkById();
   }
 }
