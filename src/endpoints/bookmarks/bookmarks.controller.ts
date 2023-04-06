@@ -1,12 +1,17 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
+  Param,
   Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
+import { User } from '@prisma/client';
+import { GetUser } from 'src/decorators';
 import { JwtGuard } from './../../guards/jwt.guard';
+import { CreateBookMarkDto } from './bookmark.dto';
 import { BookMarkService } from './bookmarks.service';
 
 @UseGuards(JwtGuard)
@@ -15,17 +20,17 @@ export class BookMarksController {
   constructor(private bookMarkServce: BookMarkService) {}
 
   @Post('bookmarks')
-  CreateBookMark() {
-    return this.bookMarkServce.createBookMark();
+  CreateBookMark(@Body() payload: CreateBookMarkDto) {
+    return this.bookMarkServce.createBookMark(payload);
   }
 
   @Get('bookmarks')
-  GetAllBookMarks() {
+  GetAllBookMarks(@GetUser('id') user: Partial<User>) {
     return this.bookMarkServce.getAllBookmarks();
   }
 
   @Get('bookmarks')
-  GetBookMarkById() {
+  GetBookMarkById(@GetUser('id') user: Partial<User>, @Param('id') id: number) {
     return this.bookMarkServce.getBookmarkById();
   }
 
