@@ -1,4 +1,4 @@
-import { CreateBookMarkDto } from './bookmark.dto';
+import { CreateBookMarkDto, EditBookMarkDto } from './bookmark.dto';
 import { Injectable } from '@nestjs/common';
 import { DbService } from './../../db/db.service';
 
@@ -6,24 +6,25 @@ import { DbService } from './../../db/db.service';
 export class BookMarkService {
   constructor(private dbService: DbService) {}
 
-  createBookMark(payload: CreateBookMarkDto) {
-    console.log(payload);
+  createBookMark(userId: number, payload: CreateBookMarkDto) {
+    console.log(userId, payload);
     return 'Bookmark Created';
   }
 
-  getAllBookmarks() {
+  getAllBookmarks(userId: number) {
+    console.log(userId);
     return 'All BookMarks';
   }
 
-  getBookmarkById() {
+  getBookmarkById(userId: number, bookmarkId: number) {
     return 'Get Bookmark By Id';
   }
 
-  editBookMarkById() {
+  editBookMarkById(userId: number, bookmarkId: number, data: EditBookMarkDto) {
     return 'Edited BookMark';
   }
 
-  deleteBookmarkById() {
+  deleteBookmarkById(userId: number, bookmarkId: number) {
     return 'Deleted BookMark';
   }
 }

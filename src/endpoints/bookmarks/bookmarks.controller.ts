@@ -21,13 +21,16 @@ export class BookMarksController {
   constructor(private bookMarkServce: BookMarkService) {}
 
   @Post()
-  CreateBookMark(@Body() payload: CreateBookMarkDto) {
-    return this.bookMarkServce.createBookMark(payload);
+  CreateBookMark(
+    @GetUser('id') userId: number,
+    @Body() payload: CreateBookMarkDto,
+  ) {
+    return this.bookMarkServce.createBookMark(userId, payload);
   }
 
   @Get()
   GetAllBookMarks(@GetUser('id') userId: number) {
-    return this.bookMarkServce.getAllBookmarks();
+    return this.bookMarkServce.getAllBookmarks(userId);
   }
 
   @Get(':id')
@@ -35,7 +38,7 @@ export class BookMarksController {
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) bookmarkId: number,
   ) {
-    return this.bookMarkServce.getBookmarkById();
+    return this.bookMarkServce.getBookmarkById(userId, bookmarkId);
   }
 
   @Patch(':id')
@@ -44,7 +47,7 @@ export class BookMarksController {
     @Param('id', ParseIntPipe) bookmarkId: number,
     @Body('id') req: EditBookMarkDto,
   ) {
-    return this.bookMarkServce.editBookMarkById();
+    return this.bookMarkServce.editBookMarkById(userId, bookmarkId, req);
   }
 
   @Delete(':id')
@@ -52,6 +55,6 @@ export class BookMarksController {
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) bookmarkId: number,
   ) {
-    return this.bookMarkServce.deleteBookmarkById();
+    return this.bookMarkServce.deleteBookmarkById(userId, bookmarkId);
   }
 }
