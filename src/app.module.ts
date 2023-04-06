@@ -1,3 +1,4 @@
+import { BookMarkService } from './endpoints/bookmarks/bookmarks.service';
 import { AuthService } from './endpoints/auth/auth.service';
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
@@ -11,6 +12,7 @@ import { UserService } from './endpoints/users/users.service';
 import { UserController } from './endpoints/users/users.controller';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './strategy/jwt.strategy';
+import { BookMarksController } from './endpoints/bookmarks/bookmarks.controller';
 @Module({
   imports: [
     ConfigModule.forRoot({}),
@@ -21,7 +23,19 @@ import { JwtStrategy } from './strategy/jwt.strategy';
       signOptions: { expiresIn: '2 days' },
     }),
   ],
-  controllers: [AppController, AuthController, UserController],
-  providers: [AppService, AuthService, DbService, UserService, JwtStrategy],
+  controllers: [
+    AppController,
+    AuthController,
+    UserController,
+    BookMarksController,
+  ],
+  providers: [
+    AppService,
+    AuthService,
+    DbService,
+    UserService,
+    BookMarkService,
+    JwtStrategy,
+  ],
 })
 export class AppModule {}
