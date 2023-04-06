@@ -10,7 +10,7 @@ export class BookMarkService {
   }
 
   getBookmarkById() {
-    return 'get Bookmark By Id';
+    return 'Get Bookmark By Id';
   }
 
   createBookMark() {
