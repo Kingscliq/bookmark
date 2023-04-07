@@ -8,7 +8,7 @@ import { DbService } from './../../db/db.service';
 
 @Injectable({})
 export class BookMarkService {
-  constructor(private dbService: DbService) {}
+  constructor(private dbService: DbService) { }
 
   async createBookMark(userId: number, payload: CreateBookMarkDto) {
     try {
@@ -45,7 +45,6 @@ export class BookMarkService {
       });
       return bookmark;
     } catch (error) {
-      console.log(error);
       return new InternalServerErrorException();
     }
   }
