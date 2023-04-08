@@ -8,7 +8,7 @@ import { DbService } from './../../db/db.service';
 
 @Injectable({})
 export class BookMarkService {
-  constructor(private dbService: DbService) { }
+  constructor(private dbService: DbService) {}
 
   async createBookMark(userId: number, payload: CreateBookMarkDto) {
     try {
@@ -49,7 +49,23 @@ export class BookMarkService {
     }
   }
 
-  editBookMarkById(userId: number, bookmarkId: number, data: EditBookMarkDto) {
+  async editBookMarkById(
+    userId: number,
+    bookmarkId: number,
+    data: EditBookMarkDto,
+  ) {
+    try {
+      const bookmark = await this.dbService.bookmark.findFirst({
+        where: {
+          id: bookmarkId,
+          userId,
+        },
+      });
+      return bookmark;
+    } catch (error) {
+      return new InternalServerErrorException();
+    }
+
     return 'Edited BookMark';
   }
 
