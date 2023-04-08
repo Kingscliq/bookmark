@@ -10,7 +10,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { User } from '@prisma/client';
-import { GetUser } from 'src/decorators';
+import { GetUser } from '../../decorators';
 import { JwtGuard } from './../../guards/jwt.guard';
 import { CreateBookMarkDto, EditBookMarkDto } from './bookmark.dto';
 import { BookMarkService } from './bookmarks.service';

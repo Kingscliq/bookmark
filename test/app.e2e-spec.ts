@@ -1,8 +1,13 @@
+// import { AppModule } from 'src/app.module';
 // import { Test, TestingModule } from '@nestjs/testing';
 // import { INestApplication } from '@nestjs/common';
 // import { AppModule } from '../src/app.module';
 // // import * as request from 'supertest';
-// // import { AppModule } from './../src/app.module';
+
+import { AppModule } from './../src/app.module';
+
+import { Test } from '@nestjs/testing';
+// import { AppModule } from 'src/app.module';
 
 // // describe('AppController (e2e)', () => {
 // //   let app: INestApplication;
@@ -24,11 +29,11 @@
 // //   });
 // // });
 
-// describe('App e2e tests', () => {
-//   beforeAll(async () => {
-//     const moduleRef = Test.createTestingModule({
-//       imports: [AppModule],
-//     }).compile();
-//   });
-//   it.todo('Return Tests Passed');
-// });
+describe('App e2e tests', () => {
+  beforeAll(async () => {
+    const moduleRef = Test.createTestingModule({
+      imports: [AppModule],
+    }).compile();
+  });
+  it.todo('Return Tests Passed');
+});
