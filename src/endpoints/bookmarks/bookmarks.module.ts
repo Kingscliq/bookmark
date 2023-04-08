@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { DbService } from 'src/db/db.service';
+import { DbService } from '../../db/db.service';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from 'src/constants/jwtConstants';
+import { jwtConstants } from '../../constants/jwtConstants';
 import { PassportModule } from '@nestjs/passport';
-import { JwtStrategy } from 'src/strategy/jwt.strategy';
+import { JwtStrategy } from '../../strategy/jwt.strategy';
 import { BookMarkService } from './bookmarks.service';
 import { BookMarksController } from './bookmarks.controller';
 

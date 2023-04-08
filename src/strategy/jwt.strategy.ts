@@ -2,9 +2,9 @@ import { JwtService } from '@nestjs/jwt';
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
-import { jwtConstants } from 'src/constants/jwtConstants';
+import { jwtConstants } from '../constants/jwtConstants';
 import { User } from '@prisma/client';
-import { DbService } from 'src/db/db.service';
+import { DbService } from '../db/db.service';
 import { Observable } from 'rxjs';
 
 @Injectable()
