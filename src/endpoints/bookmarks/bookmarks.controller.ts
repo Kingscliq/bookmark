@@ -45,7 +45,7 @@ export class BookMarksController {
   EditBookMarkById(
     @GetUser('id') userId: number,
     @Param('id', ParseIntPipe) bookmarkId: number,
-    @Body('id') req: EditBookMarkDto,
+    @Body() req: EditBookMarkDto,
   ) {
     return this.bookMarkServce.editBookMarkById(userId, bookmarkId, req);
   }

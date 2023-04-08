@@ -9,7 +9,7 @@ import { DbService } from './../../db/db.service';
 
 @Injectable({})
 export class BookMarkService {
-  constructor(private dbService: DbService) {}
+  constructor(private dbService: DbService) { }
 
   async createBookMark(userId: number, payload: CreateBookMarkDto) {
     try {
@@ -64,7 +64,7 @@ export class BookMarkService {
     if (!bookmark || bookmark.userId !== userId) {
       throw new ForbiddenException('Access to Resource Denied');
     }
-
+    console.log(bookmark);
     const updatedBookmark = await this.dbService.bookmark.update({
       where: {
         id: bookmarkId,
@@ -74,6 +74,8 @@ export class BookMarkService {
         ...data,
       },
     });
+
+    console.log(updatedBookmark);
     return updatedBookmark;
 
     return 'Edited BookMark';
