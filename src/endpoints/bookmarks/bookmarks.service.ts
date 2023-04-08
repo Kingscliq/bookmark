@@ -9,7 +9,7 @@ import { DbService } from './../../db/db.service';
 
 @Injectable({})
 export class BookMarkService {
-  constructor(private dbService: DbService) { }
+  constructor(private dbService: DbService) {}
 
   async createBookMark(userId: number, payload: CreateBookMarkDto) {
     try {
@@ -69,19 +69,20 @@ export class BookMarkService {
       where: {
         id: bookmarkId,
       },
-
       data: {
         ...data,
       },
     });
 
-    console.log(updatedBookmark);
     return updatedBookmark;
-
-    return 'Edited BookMark';
   }
 
-  deleteBookmarkById(userId: number, bookmarkId: number) {
-    return 'Deleted BookMark';
+  async deleteBookmarkById(userId: number, bookmarkId: number) {
+    const deletedBookmark = await this.dbService.bookmark.delete({
+      where: {
+        id: bookmarkId,
+      },
+    });
+    return deletedBookmark;
   }
 }
