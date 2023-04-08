@@ -1,6 +1,7 @@
 import { CreateBookMarkDto, EditBookMarkDto } from './bookmark.dto';
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
@@ -54,17 +55,26 @@ export class BookMarkService {
     bookmarkId: number,
     data: EditBookMarkDto,
   ) {
-    try {
-      const bookmark = await this.dbService.bookmark.findFirst({
-        where: {
-          id: bookmarkId,
-          userId,
-        },
-      });
-      return bookmark;
-    } catch (error) {
-      return new InternalServerErrorException();
+    const bookmark = await this.dbService.bookmark.findUnique({
+      where: {
+        id: bookmarkId,
+      },
+    });
+
+    if (!bookmark || bookmark.userId !== userId) {
+      throw new ForbiddenException('Access to Resource Denied');
     }
+
+    const updatedBookmark = await this.dbService.bookmark.update({
+      where: {
+        id: bookmarkId,
+      },
+
+      data: {
+        ...data,
+      },
+    });
+    return updatedBookmark;
 
     return 'Edited BookMark';
   }
