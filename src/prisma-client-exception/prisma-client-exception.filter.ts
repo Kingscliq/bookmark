@@ -14,7 +14,7 @@ import { Prisma } from '@prisma/client';
 export class PrismaClientExceptionFilter extends BaseExceptionFilter {
   // 2
   catch(exception: Prisma.PrismaClientKnownRequestError, host: ArgumentsHost) {
-    console.error(exception.message); // 3
+    // console.error(exception.message); // 3
 
     // default 500 error code
     super.catch(exception, host);
