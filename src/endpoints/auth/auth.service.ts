@@ -48,7 +48,6 @@ export class AuthService {
     if (!user) {
       throw new ForbiddenException('Invalid Credentials');
     }
-    // throw exception if user not foun
 
     const passwordMatch = await argon.verify(user.hash, req.password);
     if (!passwordMatch) {
